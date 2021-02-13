@@ -9,11 +9,41 @@
                PRC
                Volume Weighted Average Price
                Commodity Channel Index
-- api를 활용하여 dataframe 생성 연스
-  def와 반복문을 동시에 활용해야 하며 dicsionary를 request로 / url을 임의의 변수로 지정하는 방버에 대해 여러가지로 시도 중
+- API 및 Jason file을 통해 특정 회사의 특정 Stock price 정보를 불러옴
+   * 문제 : 1회 호출에, 1개 회사 100개 rows로 호출 제한 (안정적으로 서버를 운영하기 위함으로 보여짐)
+   * 해결코드 (Dictionary, For, F-string, Def를 활용)
+----------------------------------------------------------------------------------------------------------------   
+import pandas as pd
+import numpy as np
+import requests
+
+def cr_df(company, number = 2):
+    # list_1
+    df_save = []
+    recent_date = ['2020-12-31']
+    df_save.append(pd.DataFrame(recent_date, columns=['date']))
+    # list_2
+    params = []
+    for i in range(number):
+        params.append({
+            'access_key': '21ab33d30ae3b6ebcb1e5727a699f17d',
+            'date_to' : df_save[i]['date'].tail(1)
+        })
+        api_result = requests.get(f'https://api.marketstack.com/v1/tickers/{company}/eod', params[i])
+        api_response = api_result.json()
+        df_save.append(pd.DataFrame(api_response['data']['eod']))
+    return pd.concat(df_save).drop(index=0).reset_index().drop_duplicates("date", keep="first")
+
+Sk_by_comp = []
+comp_list = ['googl','aapl']
+for stock in range(2):
+    Sk_by_comp.append(cr_df(comp_list[stock]))
+    
+# 확인하고자 하는 해당 회사정보, index를 기입
+Sk_by_comp[1]
+----------------------------------------------------------------------------------------------------------------
   
- - 주식 관련 리포트 분석
-  대부분의 데이터분석이 투자 그 자체에 초점을 두고 리서치가 진행되나, 기사를 토대로 산업 트랜드를 먼저 발췌하고 분석을 진행한다면,
-  단지 주식 투자를 너머 주식을 통한 산업 트렌드를 살펴보는 겨영에 영향을 미칠 수 있는 분석이 될 것을 목표삼음
+ - 2차 프로젝트 관련 관련 리포트 연구
+   확인자료 출처 : https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE06693028#none
 
 - Kaggle xx ++

@@ -1,0 +1,17 @@
+
+- Kaggle Huge stock market dataset__ code 분석
+    * 방법론 : RSI
+               Bolinger Bands
+               PVT
+               Stochastic Oscillator(%K and %D)
+               CMP
+               SAR
+               PRC
+               Volume Weighted Average Price
+               Commodity Channel Index
+- api를 활용하여 dataframe 생성 연스
+  def와 반복문을 동시에 활용해야 하며 dicsionary를 request로 / url을 임의의 변수로 지정하는 방버에 대해 여러가지로 시도 중
+  
+ - 주식 관련 리포트 분석
+  대부분의 데이터분석이 투자 그 자체에 초점을 두고 리서치가 진행되나, 기사를 토대로 산업 트랜드를 먼저 발췌하고 분석을 진행한다면,
+  단지 주식 투자를 너머 주식을 통한 산업 트렌드를 살펴보는 겨영에 영향을 미칠 수 있는 분석이 될 것을 목표삼음

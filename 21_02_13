@@ -1,0 +1,5 @@
+- 임의의 주가/지수값을 생성하여 Histogram과 plt곡선을 통해 로그 수익률 분포와 r : float = 고정 단기 이자율, simga : float = 고정 변동성 값에 대한 정규분포의 확률밀도함수 비교.
+    - Histogramr과 plt곡선이 완벽히 일치함을 확인
+    - +a Q - Q Plot 을 중심으로 확인하였을 정규성을 따름을 증명함 (가설 : 통상 금융모형들은 증권 수익률이 정규분포라는 가정을 하고있다.__ 를 증명)
+
+- Understand ARIMA and tune P,D,Q__ ing...

@@ -1,0 +1,47 @@
+# Specified 'date' select automatically
+for j in range(10) :
+    Sk_by_comp_n_each = Sk_by_comp_n[j].copy()
+    SARIMA_t = []
+    for i in range(len(Sk_by_comp_n_each)):    
+        # 20년 동안의 각 회사별 각 Month(1월 ~ 12월) volume(거래량) 정보에 대한 std 산출     
+        M_deviations = Sk_by_comp_n_each['volume'].groupby(lambda x : x.month).std()
+        # 각 Month(1월 ~ 12월) volume(거래량)의 std 정보에 대한 diff 산출
+        t = M_deviations.diff()
+        # diff 값이 가장 큰 월에 대한 정보들을 본 데이터 프레임에서 True / False로 구분
+        SARIMA_t.append(Sk_by_comp_n_each.index[i].month == np.where(t == M_deviations.diff().max())[0][0] +1)
+    # 구분된 정보만을 추출
+    result = Sk_by_comp_n_each.loc[Sk_by_comp_n_each.index[SARIMA_t]].sort_values(by='date',ascending=True)['volume']
+    # 해당 일자를 제외한 나머지 일자 간의 std 값 중 가장 작은 값을 유도하는 일자가 가장 거래량의 변화가 큰 기간으로 추정
+    # 위와 같은 놀리로, Anomaly detection 진행
+    SARIMA_std = []
+    value_anomaly = None
+    for dte in result.index:
+        stdt = result[result.index != dte]
+        SARIMA_std.append(stdt.std())
+    d = {'col1': result.index, 'col2': SARIMA_std}    
+    dev_frame = pd.DataFrame(d)
+    value_anomaly = dev_frame[dev_frame['col2'] == min(SARIMA_std)]['col1']
+    print(value_anomaly)
+    
+    
+    
+    33    2001-09-17
+Name: col1, dtype: object
+95    2019-11-13
+Name: col1, dtype: object
+28    2000-10-16
+Name: col1, dtype: object
+282    2020-05-12
+Name: col1, dtype: object
+382    2020-12-28
+Name: col1, dtype: object
+8    2000-09-18
+Name: col1, dtype: object
+278    2013-04-15
+Name: col1, dtype: object
+72    2002-12-30
+Name: col1, dtype: object
+58    2002-05-24
+Name: col1, dtype: object
+25    2001-12-13
+Name: col1, dtype: object

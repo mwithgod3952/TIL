@@ -5,30 +5,30 @@ Actually, PCA can be done based on the covariance matrix as well as the correlat
 not only the latter one. Scaling the data matrix such that all variables have zero mean and unit variance 
 (also known as "normalizing", "studentisizing", "z-scoring"), makes the two approaches identical. 
 
-: PCA´Â µîºĞ»ê°ú °øºĞ»ê¿¡ ±âÃÊÇÏ¿© ¼³¸íµÉ ¼ö ÀÖ´Ù. ¸ğµç º¯¼ö¿¡ ´ëÇÏ¿© 0ÀÏ Æò±Õ°ú ÀÌ¿¡ ±âÃÊÇÑ
-ºĞ»ê ±¸Á¶¸¦ °®°Ô²û ÇÏ´Â µ¥ÀÌÅÍ¸¦ ½ºÄÉÀÏ¸µÀº "normalizing", "studentisizing", "z-scoring ÀÌ ´ëÇ¥ÀûÀÌ´Ù.
+: PCAëŠ” ë“±ë¶„ì‚°ê³¼ ê³µë¶„ì‚°ì— ê¸°ì´ˆí•˜ì—¬ ì„¤ëª…ë  ìˆ˜ ìˆë‹¤. ëª¨ë“  ë³€ìˆ˜ì— ëŒ€í•˜ì—¬ 0ì¼ í‰ê· ê³¼ ì´ì— ê¸°ì´ˆí•œ
+ë¶„ì‚° êµ¬ì¡°ë¥¼ ê°–ê²Œë” í•˜ëŠ” ë°ì´í„°ë¥¼ ìŠ¤ì¼€ì¼ë§ì€ "normalizing", "studentisizing", "z-scoring ì´ ëŒ€í‘œì ì´ë‹¤.
 
 This is because the covariance between two normalized variables *is* the correlation coefficient.
 
-: ÀÌ´Â µÎ Á¤±ÔÈ­ µÈ º¯¼ö°£ÀÇ °øºĞ»êÀÌ »ó°ü°è¼ö°¡ µÇ±â¿¡ µÎ º¯¼öÀÇ °æ¿ì µÎ º¯¼ö¿¡ ´ëÇÑ Á¢±ÙÀ» µ¿ÀÏÇÏ°Ô ¸¸µå´Â 
-Æ¯¼ºÀ» °¡Áø´Ù.
+: ì´ëŠ” ë‘ ì •ê·œí™” ëœ ë³€ìˆ˜ê°„ì˜ ê³µë¶„ì‚°ì´ ìƒê´€ê³„ìˆ˜ê°€ ë˜ê¸°ì— ë‘ ë³€ìˆ˜ì˜ ê²½ìš° ë‘ ë³€ìˆ˜ì— ëŒ€í•œ ì ‘ê·¼ì„ ë™ì¼í•˜ê²Œ ë§Œë“œëŠ” 
+íŠ¹ì„±ì„ ê°€ì§„ë‹¤.
 
 Should you log-transform?
 
-: ·Î±×º¯È¯¿¡ °üÇÏ¿© 
+: ë¡œê·¸ë³€í™˜ì— ê´€í•˜ì—¬ 
 
 If you have variables that always get positive numbers, such as lenght, weight, etc., and that showes much more variation with higher values (heteroscedasticity), 
 a log-normal distribution (i.e., normal after log-transformation) might be a clearly better description of the data than a normal distribution. 
 In such cases I would log-transform before doing PCA. 
 
-: ±æÀÌ, °¡ÁßÄ¡ µî°ú °°ÀÌ ±æÀÌ, ¹«°Ô¿Í °°ÀÌ Ç×»ó ¾ç¼öÀÎ ¼º°İÀ» °ªÀÌ Å¬¼ö·Ï Å« °ªÀÓÀ» ÀÇ¹ÌÇÏ´Â º¯¼öÀÇ °æ¿ì,
-ÇØ´ç µ¥ÀÌÅÍ¿¡ ´ëÇÏ¿© ·Î±× Á¤±Ô ºĞÆ÷°¡ ÀÏ¹İÀÇ Á¤±Ô ºĞÆ÷º¸´Ù º¸´Ù ¸íÈ®ÇÑ ¼³¸íÀ» ÇÒ ¼ö ÀÖ´Ù.
+: ê¸¸ì´, ê°€ì¤‘ì¹˜ ë“±ê³¼ ê°™ì´ ê¸¸ì´, ë¬´ê²Œì™€ ê°™ì´ í•­ìƒ ì–‘ìˆ˜ì¸ ì„±ê²©ì„ ê°’ì´ í´ìˆ˜ë¡ í° ê°’ì„ì„ ì˜ë¯¸í•˜ëŠ” ë³€ìˆ˜ì˜ ê²½ìš°,
+í•´ë‹¹ ë°ì´í„°ì— ëŒ€í•˜ì—¬ ë¡œê·¸ ì •ê·œ ë¶„í¬ê°€ ì¼ë°˜ì˜ ì •ê·œ ë¶„í¬ë³´ë‹¤ ë³´ë‹¤ ëª…í™•í•œ ì„¤ëª…ì„ í•  ìˆ˜ ìˆë‹¤.
 
 Log-transforming that kind of variables makes the distributions more normally distributed, stabilizes the variances, but also makes your model multiplative on the raw scale instead of additive. 
 That is of course the case for all types of linear models, such as t-tests or multiple regression. 
 That's worth a thought when you interpret the results.
 
-: ·Î±× º¯È¯À» ÇÏ¸é ºĞÆ÷°¡ º¸´Ù Á¤±Ô ºĞÆ÷È­ µÇ°í ºĞ»êÀÌ ¾ÈÁ¤È­µÇ±ä ÇÏÁö¸¸, °¡»êµÊ¿¡ µû¶ó ¸íÈ®È÷ »ó´ëÀû ºñ±³¶ó°í ÇØ¼®ÇÒ ¼ø ¾øÀ½.
+: ë¡œê·¸ ë³€í™˜ì„ í•˜ë©´ ë¶„í¬ê°€ ë³´ë‹¤ ì •ê·œ ë¶„í¬í™” ë˜ê³  ë¶„ì‚°ì´ ì•ˆì •í™”ë˜ê¸´ í•˜ì§€ë§Œ, ê°€ì‚°ì´ í¬í•¨ëœ ê²°ê³¼ì´ë¯€ë¡œ ëª…í™•íˆ ìƒëŒ€ì  ë¹„êµë¼ê³  í•´ì„í•  ìˆœ ì—†ìŒ.
 
 Should you scale the data to mean = 0, var = 1?
 

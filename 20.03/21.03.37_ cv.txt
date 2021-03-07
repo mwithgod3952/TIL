@@ -1,0 +1,22 @@
+-- Image >> Filter 학습의 개념 정리해두기, with matrix
+
+-- Supervised learning / Unsupervised learning 간의 구분
+-- Coloumn이 많아질수록 Classification이 어려워짐
+
+-- Discriminative algorithm 문제 해결 과정 중 'Optimizer' !! >> 성능개선에 Optimizer Update가 구체
+적으로 어떤 연관성을 가지고 연산해나가는지 알아볼 것 
+
+-- Learning mate 와 Error 그리고 발산에 대한 관계 명확하게 규명해볼 것
+
+
+-- 함수형 API ***
+-- Bunddle단위  >> 배치단위 in Deep learning
+-- actipation
+
+-- activation의 장점
+	불필요한 자극을 걸러줄 수 있고
+	확률적 출력을 이루도록 해줌
+
+-- 목적에 따라 fit하게 만드는 model을 찾는 것이  ml이기 때문에 
+AND Operator 에서 XOR Operator로 바꾸는 방법은 training_data 만 바꾸어주면 됨
+

@@ -1,7 +1,0 @@
-- ARIMA Model 각 3개모델 수학적 증명
-      Box-Jenkins ARIMA Procedure 시도
-        Issue : Identification ARIMA Model 과정에서, Graphical method는 지극히 주관적임, Loop을 통한 AIC 지표 및 
-        Testing data를 통한 Prediction Acuracy로 보다 수치적으로 명확하게 접근해볼 필요 있음
-- 상가 설립에 필요한 데이터기반 마련(데이터 분석 Practice)
-        Issue : 공백도 하나의 값으로 처리_
-          str.replace('\W','') 처리(문자열 > 공백) 시 값은 여전히 남아있음 유의 

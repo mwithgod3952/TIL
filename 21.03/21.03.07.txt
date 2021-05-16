@@ -1,5 +1,0 @@
-i will figure the anomalous behavior at a use case level.
-But to be actionable on the anomaly its important to identify and,
-provide information on which metrics are anomalous in it individually.
-
-++ SAR 지표 활용, Abnormal values가 일어난 시기, 여론과 비교 탐색적 분석 진행할 것

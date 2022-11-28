@@ -27,7 +27,7 @@ font_path = "/Library/Fonts/Arial Unicode.ttf"
 font_size = 10; font_obj = pg.font.Font(font_path, font_size)
 
 # ------------------------- Functions
-''': 아래의 코드는, grid 생성과, coordinates 실시간 업데이트 목적 
+''' 주석처리 된 아래의 코드는, grid 생성과, coordinates 실시간 업데이트 목적 
 
     def grid_update(size=30):
         rng = range(0, 900, size)

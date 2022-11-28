@@ -23,7 +23,25 @@ Wth, Hgh = 9 * 10**2, 6 * 10**2
 screen = pg.display.set_mode((Wth, Hgh))
 pg.display.set_caption('Simple Bezier Curve Implementation')
 
+font_path = "/Library/Fonts/Arial Unicode.ttf"
+font_size = 10; font_obj = pg.font.Font(font_path, font_size)
+
 # ------------------------- Functions
+''': 아래의 코드는, grid 생성과, coordinates 실시간 업데이트 목적 
+
+    def grid_update(size=30):
+        rng = range(0, 900, size)
+        for i in rng:
+            for j in rng:
+                pg.draw.circle(screen, (193, 246, 255), (i, j), 1)
+    
+    def coordinates_txt(xy):
+        screen.fill(0)
+        txt_obj = font_obj.render(str(xy), False, (255, 255, 255))
+        return screen.blit(txt_obj, xy)
+        
+'''
+
 def photoelectric_effect(circle_pos):
     eft_arr = np.array([17, 17, 17, 17, 17, 16, 16, 16, 17, 17, 17, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 2, 1, 1, 1])
     for i in range(len(eft_arr)):
@@ -41,9 +59,9 @@ def bz_math_Q(T, p0, p1, p2):
     q1_xy = [float(p1[i] * (1 - T) + p2[i] * T) for i in [0, 1]]
     return [q0_xy, q1_xy]
 
-
 def main_vis(p0, p1, p2):
     screen.fill(0)
+
     for pi in [p0, p1, p2]:
         photoelectric_effect(circle_pos=pi)
     pg.draw.line(screen, grey, p0, p1, 2)
@@ -57,6 +75,7 @@ def main_vis(p0, p1, p2):
 run = True
 while run:
     m_pos = pg.mouse.get_pos()
+    # coordinates_txt(xy=m_pos)
     for event in pg.event.get():
         if event.type == QUIT:
             run = False
@@ -89,7 +108,7 @@ while run:
                 Vec1 = bz_math_P(t, p0, p1, p2)
                 pg.draw.circle(screen, blue, (Vec1[0], Vec1[1]), 10)
 
-                pg.time.Clock().tick(30)
+                pg.time.Clock().tick(60)
                 pg.display.update()
     pg.display.update()
 

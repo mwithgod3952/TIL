@@ -19,31 +19,32 @@ blue   = (0, 0, 255)
 green  = (0, 255, 0)
 yellow = (255,255,0)
 olive  = (128,128,0)
-grey   = (211, 211, 211)
+grey   = (192,192,192)
 white  = (255, 255, 255)
 
-p_sv = []
 
+p_sv = []
+FC = (112,128,144)
 control_polygon_num = 2
-Wth, Hgh = 9 * 10**2, 6 * 10**2
+Wth, Hgh = 3 * 10**2, 3 * 10**2
 
 screen = pg.display.set_mode((Wth, Hgh))
 pg.display.set_caption('Simple Bezier Curve Implementation')
 font_size = 11; font_obj = pg.font.SysFont("arial", font_size, True, False)
 
 # ------------------------- Functions
-def cartisian(step = 10, gradation_size = 1.2):
+def cartisian(step = 10, gradation_size = 2):
     # x axis
-    pg.draw.line(screen, green, (0, Hgh/2), (Wth, Hgh/2), 1)
+    pg.draw.line(screen, (60,179,113), (0, Hgh/2), (Wth, Hgh/2), 2)
     # y axis
-    pg.draw.line(screen, green, (Wth/2, 0), (Wth/2, Hgh), 1)
+    pg.draw.line(screen, (60,179,113), (Wth/2, 0), (Wth/2, Hgh), 2)
 
     # pixel coordinates value of x
     for i in range(0, Wth, step):
-        pg.draw.line(screen, green, (i, (Hgh / 2) - gradation_size), (i, (Hgh / 2) + gradation_size), 1)
+        pg.draw.line(screen, (60,179,113), (i, (Hgh / 2) - gradation_size), (i, (Hgh / 2) + gradation_size), 2)
     # pixel coordinates value of y
     for j in range(0, Hgh, step):
-        pg.draw.line(screen, green, ((Wth / 2) - gradation_size, j), ((Wth / 2) + gradation_size, j), 1)
+        pg.draw.line(screen, (60,179,113), ((Wth / 2) - gradation_size, j), ((Wth / 2) + gradation_size, j), 2)
 
 def coordinates_txt(xy):
     cx = (Wth / 2)
@@ -52,12 +53,17 @@ def coordinates_txt(xy):
     y_ac = int(cy - xy[1])
 
     P = (x_ac, y_ac)
-    txt_obj = font_obj.render(f'x-coordinate: {P[0]},    y-coordinate: {P[1]}', False, olive)
+    txt_obj = font_obj.render(f'x-coordinate: {P[0]},    y-coordinate: {P[1]}', False, (0))
 
     return screen.blit(txt_obj, (xy[0]+20, xy[1]-40))
 
-def photoelectric_effect(circle_pos):
-    eft_arr = np.array([17, 17, 17, 17, 17, 16, 16, 16, 17, 17, 17, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 2, 1, 1, 1])
+def photoelectric_effect(circle_pos, scal_s=9, scal_e=12):
+    # chunk functiton for color array
+    c_arr = sum([(f'{i} ' * (i - 8)).split(' ') for i in range(scal_s, scal_e, 1)], [])
+    c_arr = [int(x) for x in c_arr if x is not '']
+    c_arr.reverse()
+
+    eft_arr = np.array(c_arr)
     for i in range(len(eft_arr)):
         pg.draw.circle(screen, [eft_arr[i] * 8] * 3, circle_pos, i + 1, 1)
 
@@ -74,7 +80,7 @@ def bz_math_Q(T, p0, p1, p2):
     return [q0_xy, q1_xy]
 
 def main_vis(p0, p1, p2):
-    screen.fill(0)
+    screen.fill(FC)
     cartisian()
     if len(p_sv) <= control_polygon_num:
         coordinates_txt(m_pos)
@@ -83,8 +89,8 @@ def main_vis(p0, p1, p2):
     for pi in [p0, p1, p2]:
         photoelectric_effect(circle_pos=pi)
         # pg.draw.circle(screen, grey, pi, 1)
-    pg.draw.line(screen, grey, p0, p1, 2)
-    pg.draw.line(screen, grey, p1, p2, 2)
+    pg.draw.line(screen, (0), p0, p1, 1)
+    pg.draw.line(screen, (0), p1, p2, 1)
 
     for t in np.arange(0, 1, 0.01):
         bz_vec = bz_math_P(t, p0, p1, p2)
@@ -92,9 +98,10 @@ def main_vis(p0, p1, p2):
 
 # ------------------------- Visualization
 run = True
-trigger = 0
+
+prt_idx = 0
 while run:
-    screen.fill(0)
+    screen.fill(FC)
     m_pos = pg.mouse.get_pos()
     coordinates_txt(m_pos)
 
@@ -103,12 +110,12 @@ while run:
         if event.type == QUIT:
             run = False
         if event.type == pg.MOUSEBUTTONUP:
-            photoelectric_effect(circle_pos=m_pos); p_sv.append(m_pos)
+            photoelectric_effect(circle_pos=m_pos); p_sv.append(m_pos); prt_idx = 0
             # pg.draw.circle(screen, grey, m_pos, 1); p_sv.append(m_pos);
         else:
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_RETURN:
-                    screen.fill(0); p_sv = []
+                    screen.fill(FC); p_sv = []
                     cartisian()
 
     if len(p_sv) == control_polygon_num - 1:
@@ -129,16 +136,22 @@ while run:
 
                 # calcaulate "Q"
                 Vec0 = bz_math_Q(t, p0, p1, p2)
-                pg.draw.line(screen, (255, 6, 81), Vec0[0], Vec0[1], 2)
+                pg.draw.line(screen, (255, 6, 81), Vec0[0], Vec0[1], 1)
 
                 # calcaulate "P"
                 Vec1 = bz_math_P(t, p0, p1, p2)
-                pg.draw.circle(screen, blue, (Vec1[0], Vec1[1]), 10)
+                pg.draw.circle(screen, (47,79,79), (Vec1[0], Vec1[1]), 5)
 
+                if prt_idx == 0: print((Vec1[0], Vec1[1]));
                 coordinates_txt((Vec1[0], Vec1[1]))
 
                 pg.time.Clock().tick(60)
                 pg.display.update()
+
+            if prt_idx == 0: print('-------------------------');
+
+            prt_idx += 1
+
     pg.display.update()
 
 pg.quit(); sys.exit()
